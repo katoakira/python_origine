@@ -4,18 +4,45 @@
     <meta charset="utf-8">
     <title>python app</title>
     <script src="http://maps.google.com/maps/api/js?sensor=true&language=ja"></script>
-    <script src="//raw.githubusercontent.com/HPNeo/gmaps/master/gmaps.js"></script>
+    <script src="http://192.168.33.10/gmaps.js"></script>
+    <script>
+        
+        window.onload = function(){
+            var map = new GMaps({
+                div: "#map",
+                lat: 35.710285,
+                lng: 139.77714,
+                zoom: 15,
+            });
+            % for i in user_list:
+            GMaps.geocode({
+                address: i['address'],
+                callback: function(results, status) {
+                    if (status == 'OK') {
+                        var latlng = results[0].geometry.location;
+                        map.setCenter(latlng.lat(), latlng.lng());
+                        map.addMarker({
+                           lat: latlng.lat(),
+                           lng: latlng.lng()
+                        });
+                    }
+                }
+            });
+            % end
+            
+        };
+    </script>
+ 
     <style>
-        @charset "utf-8";
         #map {
-            width: 100%;
-            height: 100%;
-        }
+            width: 500px;
+            height: 500px;
+       }
     </style>
 </head>
 <body>
     <!-- 入力 -->
-    <form method="post" action="http://192.168.33.10:8081/hello/">
+    <form method="post" action="http://192.168.33.10:8080/hello/">
         <label>username: </label> 
         <input type="text" name="username">
         <br />
@@ -25,33 +52,16 @@
         <label>body: </label>
         <input type="text" name="body">
         <br />
-        <label>position: </label>
-        <input type="text" name="position">
+        <label>address: </label>
+        <input type="text" name="address">
         <br />
         <input type="submit" value="submit">
         <hr />
+    </form>
 
-    <!-- 出力 -->
-        <div id="map"></div>
-        <script>
-          // var map;
-          //     function initialize() {
-          //         var mapOptions = {
-          //             zoom: 15,
-          //             center: new google.maps.LatLng(35.710285, 139.77714)
-          //         };
-          //         map = new google.maps.Map(document.getElementById('map'),
-          //         mapOptions);
-          //     }
- 
-          //     google.maps.event.addDomListener(window, 'load', initialize); 
-            var map = new GMaps({
-                div: "#map",
-                lat: 35.710285,
-                lng: 139.77714,
-                zoom: 15,
-            }); 
-        </script>
+        <!--  出力 -->
+    
+    <div id="map"></div>
 </body>
 </html>
 
