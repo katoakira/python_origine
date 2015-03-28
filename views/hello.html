@@ -16,7 +16,7 @@
             });
             % for i in user_list:
             GMaps.geocode({
-                address: i['address'],
+                address: "{{i['address']}}",
                 callback: function(results, status) {
                     if (status == 'OK') {
                         var latlng = results[0].geometry.location;
@@ -37,12 +37,18 @@
         #map {
             width: 500px;
             height: 500px;
-       }
+        }
+
+        #body {
+        }
     </style>
 </head>
 <body>
+    <!--  出力 -->
+    <div id="map"></div>
     <!-- 入力 -->
     <form method="post" action="http://192.168.33.10:8080/hello/">
+        <hr />
         <label>username: </label> 
         <input type="text" name="username">
         <br />
@@ -50,18 +56,17 @@
         <input type="text" name="title">
         <br />
         <label>body: </label>
-        <input type="text" name="body">
+        <textarea name="body" cols="40" rows="10"></textarea>
         <br />
         <label>address: </label>
         <input type="text" name="address">
         <br />
         <input type="submit" value="submit">
-        <hr />
     </form>
-
-        <!--  出力 -->
-    
-    <div id="map"></div>
+    <!--<script type="text/javascript">
+        function chk(frm){
+            if(frm.elements[])
+        </script>-->
 </body>
 </html>
 
