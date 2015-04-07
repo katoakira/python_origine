@@ -13,20 +13,23 @@
                 lng: 139.77714,
                 zoom: 15,
             });
+
             % for i in user_list:
-            GMaps.geocode({
-              address: "{{i['address']}}",
-              callback: function(results, status) {
-                if (status == 'OK') {
-                  var latlng = results[0].geometry.location;
-                  map.setCenter(latlng.lat(), latlng.lng());
-                  map.addMarker({
-                    lat: latlng.lat(),
-                    lng: latlng.lng()
-                  });
+            if ("{{i['address']}}" !== "") {
+                    GMaps.geocode({
+                        address: "{{i['address']}}",
+                        callback: function(results, status) {
+                            if (status == 'OK') {
+                                var latlng = results[0].geometry.location;
+                                map.setCenter(latlng.lat(), latlng.lng());
+                                map.addMarker({
+                                    lat: latlng.lat(),
+                                    lng: latlng.lng()
+                                });
+                            }
+                        }
+                    });
                 }
-              }
-            });
             % end
         };
     </script>
