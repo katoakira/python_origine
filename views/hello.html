@@ -15,7 +15,7 @@
             });
 
             % for i in user_list:
-            if ("{{i['address']}}" !== "") {
+            if ("{{i['address']}}" !== "None") {
                     GMaps.geocode({
                         address: "{{i['address']}}",
                         callback: function(results, status) {
@@ -24,7 +24,11 @@
                                 map.setCenter(latlng.lat(), latlng.lng());
                                 map.addMarker({
                                     lat: latlng.lat(),
-                                    lng: latlng.lng()
+                                    lng: latlng.lng(),
+                                    title: "{{i['title']}} by {{i['username']}}",
+                                    infoWindow: {
+                                        content: "{{i['body']}}"
+                                    }
                                 });
                             }
                         }
