@@ -25,9 +25,12 @@
                                 map.addMarker({
                                     lat: latlng.lat(),
                                     lng: latlng.lng(),
-                                    title: "{{i['title']}} by {{i['username']}}",
                                     infoWindow: {
-                                        content: "{{i['body']}}"
+                                        content:
+                                        "\
+                                        <h1>{{i['title']}} by {{i['username']}}</h1></ br>\n\
+                                        {{i['body']}}\n\
+                                        "
                                     }
                                 });
                             }
